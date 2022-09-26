@@ -1,0 +1,28 @@
+{
+  "name": "cypress-start",
+  "version": "1.0.0",
+  "description": "cypress first time",
+  "main": "index.js",
+  "scripts": {
+    "test": "cypress open"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "css-loader": "^6.7.1",
+    "cucumber": "^6.0.7",
+    "cypress": "^3.8.3",
+    "cypress-cucumber-preprocessor": "^4.3.1",
+    "cypress-fill-command": "^1.0.2",
+    "cypress-localstorage-commands": "^2.2.1",
+    "ts-loader": "^9.3.1"
+  },
+  "cypress-cucumber-preprocessor": {
+    "step_definitions": "./cypress/stepDefinitions"
+  },
+  "keywords": [
+    "cypress",
+    "cucumber"
+  ],
+  "author": "shivam",
+  "license": "ISC"
+}
