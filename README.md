@@ -1,5 +1,3 @@
-��#� �c�y�p�r�e�s�s�
-�
-�
+## CYPRESS ##
 
 For Scheduling a Job On Given Interval https://crontab-generator.org/
