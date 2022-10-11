@@ -13,8 +13,3 @@ jobs:
     - name: Running
       run: |
         echo "Running!"
-
-
-    - id: set-failure
-        if: failure()
-        run: echo "::set-output name=status::true"       
