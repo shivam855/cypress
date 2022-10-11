@@ -38,7 +38,7 @@ jobs:
           then
             echo ENV_TARGET=dev >> $GITHUB_ENV
           fi
-      - uses: cypress-io/github-action@v4.x.x
+      - uses: cypress-io/github-action@v4.2.0
         name: Cypress run
         if: ${{ env.ENV_TARGET == 'test' }}
         with:
