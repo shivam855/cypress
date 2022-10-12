@@ -1,56 +1,24 @@
 name: workflow
 on: 
+  schedule:
+    - cron: '* * * * *'
   workflow_dispatch:
     inputs:
       environment:
-        description: "Environment to run tests against (test,beta)"
+        description: "In which environment you want to run (test,beta)"
         required: true
         default: "test"
-  push:
-    branches:
-      -main
-    schedule:
-      -cron: '55 22 * * *'
+
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
-    outputs:
-      failure: ${{ steps.set-failure.outputs.status }}
-    env:
-      ENV_TARGET: ${{ github.event.inputs.environment }}
-    strategy:
-      fail-fast: false
-      matrix:
-        containers: [1, 2]
-        node-version: [16.x]
-
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-
-      - name: Ensure defaults are set
-        run: |
-          if [[ -z $ENV_TARGET ]]
-          then
-            echo ENV_TARGET=dev >> $GITHUB_ENV
-          fi
-      - uses: cypress-io/github-action@v4.2.0
-        name: Cypress run
-        if: ${{ env.ENV_TARGET == 'test' }}
+      - name: Cypress run
         with:
           start: npm run test
           config-file: cypress.json
           record: true
           parallel: true
           browser: chrome
-          tag: env-${{ env.ENV_TARGET }}
           spec: |
             cypress/integration/*.feature
-
-      - id: set-failure
-        if: failure()
-        run: echo "::set-output name=status::true"
