@@ -1,17 +1,12 @@
 name: workflow
 on: 
   schedule:
-    - cron: '* * * * *'
+    - cron: '2 * * * *'
+  workflow_dispatch:  
 
 jobs:
-  cypress-run:
+  my-job:
     runs-on: ubuntu-latest
     steps:
-      - name: Cypress run
+      - name: first-step
         run: echo "Hello g"
-#         with:
-#           start: npm run test
-#           config-file: cypress.json
-#           browser: chrome
-#           spec: |
-#             cypress/integration/*.feature
