@@ -2,6 +2,11 @@ name: workflow
 on: 
   schedule:
     - cron: '0 12 * * *'
+  workflow_dispatch:
+    inputs:
+      input1:
+        description: 'Version Suffix'
+        required: false  
     
 jobs:
   my-job:
