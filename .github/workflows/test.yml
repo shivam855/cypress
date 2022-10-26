@@ -2,13 +2,7 @@ name: workflow
 on: 
   schedule:
     - cron: '0 12 * * *'
-  workflow_dispatch:
-    inputs:
-      environment:
-        description: "In which environment you want to run (test,beta)"
-        required: true
-        default: "test"  
-
+    
 jobs:
   my-job:
     runs-on: ubuntu-latest
