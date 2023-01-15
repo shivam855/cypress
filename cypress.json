@@ -1,7 +1,0 @@
-{
-"env": {
-  
-  "url": "https://google.com/"
-},
-"specPattern": "**/*.feature"
-}
