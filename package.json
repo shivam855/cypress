@@ -10,7 +10,7 @@
   "devDependencies": {
     "css-loader": "^6.7.1",
     "cucumber": "^6.0.7",
-    "cypress": "^3.8.3",
+    "cypress": "^12.3.0",
     "cypress-cucumber-preprocessor": "^4.3.1",
     "cypress-fill-command": "^1.0.2",
     "cypress-localstorage-commands": "^2.2.1",
