@@ -16,7 +16,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Run Cypress tests
+      - uses: cypress-io/github-action@v4.2.0
+        name: Run Cypress tests
         with:
           start: npm run test
           config-file: cypress.config.js
