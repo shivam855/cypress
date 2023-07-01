@@ -25,4 +25,4 @@ jobs:
           config-file: cypress.config.js
           browser: chrome
           spec: |
-            cypress/cypress/integration/example.feature
+            cypress/integration/example.feature
