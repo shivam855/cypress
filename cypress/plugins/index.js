@@ -11,18 +11,29 @@
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
 
-const cucumber = require('cypress-cucumber-preprocessor').default;
-const fs = require("fs");
+// const cucumber = require('cypress-cucumber-preprocessor').default;
+// const fs = require("fs");
+
+// module.exports = (on, config) => {
+//   on('file:preprocessor', cucumber());
+//   on("task", {
+//     getData({ filter }) {
+//       return new Promise(resolve => {
+//           console.log("Data is appended to file successfully.");
+//           resolve("");
+//           client.close();
+//         });
+//     }
+//   });
+// }
+
+//// <reference types=”@shelex/cypress-allure-plugin” />
+const allureWriter = require('@shelex/cypress-allure-plugin/writer');
 
 module.exports = (on, config) => {
-  on('file:preprocessor', cucumber());
-  on("task", {
-    getData({ filter }) {
-      return new Promise(resolve => {
-          console.log("Data is appended to file successfully.");
-          resolve("");
-          client.close();
-        });
-    }
-  });
-}
+  allureWriter(on, config);
+  // other configurations...
+
+  return config;
+};
+
