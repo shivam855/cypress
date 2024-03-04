@@ -23,6 +23,11 @@ specPattern: 'cypress/integration/**/*/*.{feature,features}',
 
 **For enabling the vs code to redirect from feature to stepDefination use this code....**
 {    "cucumberautocomplete.steps": [      "./cypress/stepDefinitions/**/*.js",    ],    "cucumberautocomplete.syncfeatures": "./cypress/integration/features/**/*.feature",    "cucumberautocomplete.strictGherkinCompletion": true,    "cucumberautocomplete.smartSnippets": true,    "cucumberautocomplete.customParameters": [      {        "parameter": "{ab}",        "value": "(a|b)"      },    ],    "editor.quickSuggestions": {      "comments": false,      "strings": true,      "other": true    },    "editor.codeActionsOnSave": null,    "workbench.colorTheme": "Default Light+"  }
-    
+
+
+
+    Cypress.on("uncaught:exception", (err, runnable) => {
+    return false;
+  });
     
     
