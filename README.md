@@ -31,3 +31,19 @@ specPattern: 'cypress/integration/**/*/*.{feature,features}',
   });
     
     
+cy.get('.calendar-open-button').click();
+    cy.get('.calendar-year-selector').then(($year) => {
+      if ($year.text() !== targetYear) {
+        cy.get('.calendar-next-year').click(); 
+      }
+    });
+
+    
+    cy.get('.calendar-month-selector').then(($month) => {
+      if ($month.text() !== targetMonth) {
+        cy.get('.calendar-next-month').click(); 
+      }
+    });
+
+    
+    cy.get('.calendar-day').contains('15').click();
