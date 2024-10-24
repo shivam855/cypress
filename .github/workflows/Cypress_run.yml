@@ -1,26 +1,85 @@
-name: Cypress work flow
+name: Cypress E2E Tests Flow
 
-on: 
+on:
   workflow_dispatch:
     inputs:
       environment:
-        description: "Select the env."
+        description: "Environment to run tests against (dev, qa, prod)"
         required: true
-        default: prod
+        type: choice
+        options:
+          - 'QA'
+          - 'DEV'
+          - 'Prod'
 
 jobs:
-  cypress:
-    runs-on: ubuntu-latest
+  cypress-run:
+    runs-on: windows-latest
+
+    strategy:
+      matrix:
+        browser: [chrome]
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      # Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Checkout code
-        uses: actions/checkout@v2
+      # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
 
+      # Install dependencies
       - name: Install dependencies
-        run: npm i
+        run: npm install
 
+      # Set environment variables based on input environment
+      - name: Set environment variables
+        shell: pwsh
+        run: |
+          Write-Host "Setting environment variables based on environment"
+          $envInput = "${{ github.event.inputs.environment }}"  # Capture the input environment
+          Write-Host "Environment Input: $envInput"  # Print the input environment
+
+          if ($envInput -eq "Prod") {
+            Write-Host "CYPRESS_USER=${{ secrets.PROD_CYPRESS_USER }}"  # Print value to console
+            Write-Host "CYPRESS_PASSWORD=${{ secrets.PROD_CYPRESS_PASSWORD }}"  # Print value to console
+            echo "CYPRESS_USER=${{ secrets.PROD_CYPRESS_USER }}" >> $GITHUB_ENV
+            echo "CYPRESS_PASSWORD=${{ secrets.PROD_CYPRESS_PASSWORD }}" >> $GITHUB_ENV
+          } elseif ($envInput -eq "DEV") {
+            Write-Host "CYPRESS_USER=${{ secrets.DEV_CYPRESS_USER }}"  # Print value to console
+            Write-Host "CYPRESS_PASSWORD=${{ secrets.DEV_CYPRESS_PASSWORD }}"  # Print value to console
+            echo "CYPRESS_USER=${{ secrets.DEV_CYPRESS_USER }}" >> $GITHUB_ENV
+            echo "CYPRESS_PASSWORD=${{ secrets.DEV_CYPRESS_PASSWORD }}" >> $GITHUB_ENV
+          } elseif ($envInput -eq "QA") {
+            Write-Host "CYPRESS_USER=${{ secrets.QA_CYPRESS_USER }}"  # Print value to console
+            Write-Host "CYPRESS_PASSWORD=${{ secrets.QA_CYPRESS_PASSWORD }}"  # Print value to console
+            echo "CYPRESS_USER=${{ secrets.QA_CYPRESS_USER }}" >> $GITHUB_ENV
+            echo "CYPRESS_PASSWORD=${{ secrets.QA_CYPRESS_PASSWORD }}" >> $GITHUB_ENV
+          }
+
+      # Run Cypress tests
       - name: Run Cypress tests
-        run: npx cypress run
+        uses: cypress-io/github-action@v5
+        with:
+          config-file: cypress.config.js
+          browser: ${{ matrix.browser }}
+          wait-on-timeout: 180
+        env: 
+          CYPRESS_ENV: ${{ github.event.inputs.environment }}
+          CYPRESS_USER: ${{ env.CYPRESS_USER }}  
+          CYPRESS_PASSWORD: ${{ env.CYPRESS_PASSWORD }}
+        
+      # Always run: Upload HTML report and artifacts
+      - name: Upload HTML report and artifacts
+        if: always()  # Ensures this runs regardless of test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: cypress-report
+          path: |
+            cypress/reports/
+            cypress/screenshots/
+            cypress/videos/
+            cypress-mochawesome-reporter.log
