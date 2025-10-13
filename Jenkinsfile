@@ -14,13 +14,13 @@ pipeline {
 
     stage('Install Dependencies') {
       steps {
-        sh 'npm i'
+        bat 'npm i'
       }
     }
 
     stage('Run Cypress Tests') {
       steps {
-        sh 'npm run cy:chrome'
+        bat 'npm run cy:chrome'
       }
     }
 
