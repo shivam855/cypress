@@ -11,7 +11,7 @@ module.exports = defineConfig({
   experimentalInteractiveRunEvents: true,
   chromeWebSecurity: true,
   trashAssetsBeforeRuns: true,
-  pageLoadTimeout: 120000,
+  pageLoadTimeout: 100000,
   reporter: "cypress-mochawesome-reporter",
   reporterOptions: {
     charts: true,
