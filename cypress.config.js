@@ -45,5 +45,6 @@ module.exports = defineConfig({
       // new TestRailReporter(on, config).register();
       // return config;
     },
+    specPattern: "cypress/integration/**/*.js",
   },
 });
