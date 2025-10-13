@@ -39,15 +39,14 @@ pipeline {
     always {
       archiveArtifacts artifacts: 'cypress/screenshots/**/*.png', allowEmptyArchive: true
       archiveArtifacts artifacts: 'cypress/reports/html/videos/**/*.mp4', allowEmptyArchive: true
-    publishHTML(target: [
-      allowMissing: false,
-      alwaysLinkToLastBuild: true,
-      keepAll: true,
-      reportDir: 'cypress/reports/html',
-      reportFiles: 'index.html',
-      reportName: 'Cypress Test Report'
-    ])
+        publishHTML(target: [
+        allowMissing: false,
+        alwaysLinkToLastBuild: true,
+        keepAll: true,
+        reportDir: 'cypress/reports/html',
+        reportFiles: 'index.html',
+        reportName: 'Cypress Test Report'
+        ])
+    }
   }
-}
-
 }
